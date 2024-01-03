@@ -1,0 +1,14 @@
+body{
+    background-image: url(images/bg2.jpg) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main-div{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    margin-top: 5%;
+    /* background-color: aqua; */
+}

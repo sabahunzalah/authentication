@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>registration</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <form action="" id="mainForm">
+        <div class="container main-div">
+            <div class="col-lg-4">
+                <h1>Register User</h1>
+                <label for="emailInp" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="emailInp" placeholder="name@example.com">
+            </div>
+            <div class="col-lg-4">
+                <label for="passwordInp" class="col-form-label">Password</label>
+                <input type="password" id="passwordInp" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-lg-4">
+                <label for="fName" class="col-form-label">First Name</label>
+                <input type="text" class="form-control" aria-describedby="passwordHelpInline" id="fName">
+            </div>
+            <div class="col-lg-4">
+                <label for="lName" class="col-form-label">Last Name</label>
+                <input type="text" class="form-control" aria-describedby="passwordHelpInline" id="lName">
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success">Create new user</button>
+                <button type="button" class="btn btn-success"><a href="./index.html"
+                        style="text-decoration: none; color: white;">sign in</a></button>
+            </div>
+        </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBzbKCecBg7Y735f9XGq6OLqHfwv2rgdLc",
+            authDomain: "authentication-testing-b847f.firebaseapp.com",
+            projectId: "authentication-testing-b847f",
+            storageBucket: "authentication-testing-b847f.appspot.com",
+            messagingSenderId: "1022571637752",
+            appId: "1:1022571637752:web:6f0487eb5b88b1c237040d",
+            measurementId: "G-PCNL48WGFZ"
+          };
+          
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const auth = getAuth(app);
+
+        let emailInp = document.getElementById('emailInp');
+        let passwordInp = document.getElementById('passwordInp');
+        let fName = document.getElementById('fName');
+        let lName = document.getElementById('lName');
+        let mainForm = document.getElementById('mainForm');
+
+        let registerUser = evt => {
+            evt.preventDefault();
+
+            // Perform client-side form validation here if needed
+
+            createUserWithEmailAndPassword(auth, emailInp.value, passwordInp.value)
+                .then((credentials) => {
+                    console.log(credentials);
+                    window.location.href ="./new.html";
+                    // set(ref(db, 'UsersAuthList/' + credentials.user.uid), {
+                    //     firstName: fName.value,
+                    //     lastName: lName.value,
+                    // });
+                  
+                })
+                .catch((error) => {
+                    alert(error.message);
+                    console.log(error.code);
+                    console.log(error.message);
+                });
+        };
+
+        let redirectToHome = () => {
+            // Redirect to home page without creating a new user
+            window.location.href ="./new.html";
+        };
+
+        
+        mainForm.addEventListener('submit', registerUser);
+    </script>
+</body>
+
+</html>
